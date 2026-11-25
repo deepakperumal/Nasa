@@ -1,10 +1,7 @@
 <div class="scout-page">
   <div class="header">
-    <div>
+    <div class="header-left">
       <h1>NASA Scout Overview</h1>
-      <p class="subtitle">Near-Earth object candidates from JPL Scout</p>
-    </div>
-    <div class="actions">
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input
@@ -14,6 +11,14 @@
           (input)="onQuickFilter($event)"
         />
       </span>
+    </div>
+    <div class="actions">
+      <div class="count-badge" *ngIf="store.hasData()">
+        <span>Total: {{ store.candidates().length }}</span>
+        <span *ngIf="displayedCount() !== store.candidates().length">
+          · Showing {{ displayedCount() }}
+        </span>
+      </div>
       <p-button
         label="Refresh"
         icon="pi pi-refresh"
@@ -35,6 +40,9 @@
       <p-button label="Retry" (onClick)="store.refresh()" />
     </div>
   } @else {
+    <div class="table-top-count" *ngIf="store.hasData()">
+      Showing {{ displayedCount() }} of {{ store.candidates().length }} candidates
+    </div>
     <ag-grid-angular
       class="ag-theme-quartz grid"
       [rowData]="store.candidates()"
@@ -42,8 +50,11 @@
       [defaultColDef]="defaultColDef"
       [pagination]="true"
       [paginationPageSize]="20"
+      [paginationPageSizeSelector]="[10, 20, 50, 100]"
       [animateRows]="true"
+      [sideBar]="sideBar"
       (gridReady)="onGridReady($event)"
+      (filterChanged)="onFilterChanged()"
       (rowClicked)="onRowClicked($event)"
     />
   }
