@@ -51,9 +51,6 @@ export const ScoutStore = signalStore(
     ),
     selectCandidate(candidate: ScoutObject | null) {
       patchState(store, { selected: candidate });
-    },
-    refresh() {
-      this.loadCandidates();
     }
   }))
 );

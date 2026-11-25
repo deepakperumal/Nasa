@@ -19,12 +19,7 @@
           · Showing {{ displayedCount() }}
         </span>
       </div>
-      <p-button
-        label="Refresh"
-        icon="pi pi-refresh"
-        [loading]="store.loading()"
-        (onClick)="store.refresh()"
-      />
+
     </div>
   </div>
 
@@ -37,7 +32,7 @@
     <div class="state-center error">
       <i class="pi pi-exclamation-triangle"></i>
       <p>{{ store.error() }}</p>
-      <p-button label="Retry" (onClick)="store.refresh()" />
+
     </div>
   } @else {
     <div class="table-top-count" *ngIf="store.hasData()">
